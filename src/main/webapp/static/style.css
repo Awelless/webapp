@@ -1,0 +1,154 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #EC801C;
+    z-index: 1;
+    padding: 12px;
+}
+
+.navbar-container {
+    float: right;
+    align-content: center;
+    color: #000000;
+    text-decoration: none;   
+}
+
+.navbar-link {
+    display: inline-block;
+    margin: 10px 0 -20px 0;
+}
+
+.navbar-button {
+    display: inline-block;
+    margin: 0 20px -20px 0;
+}   
+
+.navbar-logo {
+    float: left;
+    color: #000000;
+    text-decoration: none;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.navbar-logo a:visited {
+    color: #000000;
+}
+
+body {
+    background-color: #F4F1EC;
+}
+
+.container {
+    position: relative;
+    padding-top: 90px;
+}
+
+.form-wrapper {
+    text-align: center;
+}
+
+.form {
+    margin: auto;
+    max-width: 400px;
+}
+
+.form-name {
+    font: 400 20px Arial;
+
+    color: #000000;
+    padding: 8px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+}
+
+.button-primary {
+    color: #000000;
+    background-color: #EC801C;
+    font: 400 14px Arial;
+    padding: 6px 8px;
+    margin: 8px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-primary:hover {
+    color: #000000;
+    background-color: #ED7405;
+    padding: 6px 8px;
+    margin: 8px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-light {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    font: 400 14px Arial;
+
+    color: #000000;
+    background-color: #FFFFFF;
+    padding: 6px 8px;
+    margin: 8px 8px 8px 0px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-light:hover {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    font: 400 14px Arial;
+
+    color: #000000;
+    background-color: #F2F2F2;
+    padding: 6px 8px;
+    margin: 8px 8px 8px 0px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.alert {
+    margin: auto;
+    max-width: 372px;
+    color: #9e1f16;
+    background-color: #ffd4d1;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #9e1f16;
+}
+
+.invalid-form-feedback {
+    color: #9e1f16;
+    text-align: left;
+    margin: 4px 0px -20px 4px;
+}
+
+.link-button {
+    background: none;
+    border: none;
+    color: #000000;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 1em;
+    font-family: serif;
+  }
+
+  .link-button:focus {
+    outline: none;
+  }

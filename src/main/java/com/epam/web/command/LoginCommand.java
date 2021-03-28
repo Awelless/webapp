@@ -26,7 +26,7 @@ public class LoginCommand implements Command {
 
         if (optionalUser.isPresent()) {
             request.getSession().setAttribute("user", optionalUser.get());
-            return CommandResult.redirect(request.getRequestURI() + Params.ROOM_ORDER_PAGE);
+            return CommandResult.redirect(request.getRequestURI() + Params.NEW_RESERVATION_PAGE);
         }
 
         request.setAttribute("badCredentials", true);

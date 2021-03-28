@@ -1,6 +1,7 @@
 package com.epam.web.command;
 
 import com.epam.web.dao.DaoHelperFactory;
+import com.epam.web.service.RoomReservationService;
 import com.epam.web.service.UserService;
 
 public class CommandFactory {
@@ -22,18 +23,22 @@ public class CommandFactory {
                 return new RegistrationCommand(new UserService(daoHelperFactory));
             case "localization":
                 return new ChangeLocalizationCommand();
+            case "reservation":
+                return new ReserveRoomCommand(new RoomReservationService(daoHelperFactory));
             case "loginPage":
                 return new ShowPageCommand(Pages.LOGIN);
             case "registrationPage":
                 return new ShowPageCommand(Pages.REGISTRATION);
-            case "roomOrderPage":
-                return new ShowPageCommand(Pages.ROOM_ORDER);
-            case "userOrdersPage":
-                return new ShowPageCommand(Pages.USER_ORDERS);
+            case "newReservationPage":
+                return new ShowPageCommand(Pages.ROOM_RESERVATION);
+            case "newReservationSuccessPage":
+                return new ShowPageCommand(Pages.ROOM_RESERVATION_SUCCESS);
+            case "userReservationsPage":
+                return new ShowPageCommand(Pages.USER_RESERVATIONS);
             case "paymentPage":
                 return new ShowPageCommand(Pages.PAYMENT);
-            case "allOrdersPage":
-                return new ShowPageCommand(Pages.ALL_ORDERS);
+            case "allReservationsPage":
+                return new ShowPageCommand(Pages.ALL_RESERVATIONS);
             case "choosingRoomPage":
                 return new ShowPageCommand(Pages.CHOOSING_ROOM);
             default:

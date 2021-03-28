@@ -12,7 +12,16 @@
 
         <div class="container">
 
-            <h4>Create hotel order</h4>
+            <div class="form-wrapper">
+                <div class="form-name" style="font-size: 16px">
+                    <fmt:message key="local.room.order.success" />
+                    <br />
+                    <br />
+                    <a class="button-primary" href="${pageContext.request.contextPath}/controller?command=userRoomReservationsPage">
+                        OK
+                    </a>
+                </div>
+            </div>
 
         </div>
     </body>

@@ -12,7 +12,7 @@ public class RoomReservation implements Entity {
     private int numberOfBeds;
     private int rating;
     private long cost;
-    private RoomReservationStatus status;
+    private RoomReservationStatus status = RoomReservationStatus.PENDING;
 
     public RoomReservation(Long userId, Date checkIn, Date checkOut, int numberOfBeds, int rating) {
         this.userId = userId;

@@ -4,10 +4,8 @@ import com.epam.web.command.Command;
 import com.epam.web.command.CommandFactory;
 import com.epam.web.command.CommandResult;
 import com.epam.web.service.ServiceException;
-import com.epam.web.util.CookieHandler;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,14 +13,11 @@ import java.io.IOException;
 
 public class Controller extends HttpServlet {
 
-    private static final String PREVIOUS_PARAMS_COOKIE_NAME = "previousParams";
-
     private final CommandFactory commandFactory = new CommandFactory();
-    private final CookieHandler cookieHandler = new CookieHandler();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        saveParams(request, response);
+        saveParams(request);
         process(request, response);
     }
 
@@ -52,10 +47,8 @@ public class Controller extends HttpServlet {
         }
     }
 
-    private void saveParams(HttpServletRequest request, HttpServletResponse response) {
-
+    private void saveParams(HttpServletRequest request) {
         String query = request.getQueryString();
-        Cookie cookie = new Cookie(PREVIOUS_PARAMS_COOKIE_NAME, query);
-        cookieHandler.set(response, cookie);
+        request.getSession().setAttribute("previousParams", query);
     }
 }

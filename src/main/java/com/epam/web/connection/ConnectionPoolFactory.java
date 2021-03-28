@@ -12,14 +12,17 @@ import java.util.Properties;
 
 public class ConnectionPoolFactory {
 
-    private static final String PROPERTIES_FILENAME = "database.properties";
+    private static final String PROPERTIES_FILENAME = "database/database.properties";
 
     private String dbUrl;
     private String dbUsername;
     private String dbPassword;
     private int poolSize;
 
-    public ConnectionPool create() {
+    /*package-private*/ ConnectionPoolFactory() {
+    }
+
+    /*package-private*/ ConnectionPool create() {
         try {
             initializeProperties();
             ConnectionPool connectionPool = new ConnectionPool(poolSize);

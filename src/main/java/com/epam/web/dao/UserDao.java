@@ -10,8 +10,8 @@ public class UserDao extends AbstractDao<User> {
 
     private static final String TABLE_NAME = "user";
 
-    private static final String FIND_BY_USERNAME = "select * from user where username = ?";
-    private static final String FIND_BY_USERNAME_AND_PASSWORD = "select * from user where username = ? and password = md5(?)";
+    private static final String FIND_BY_USERNAME = "select * from user where binary username = ?";
+    private static final String FIND_BY_USERNAME_AND_PASSWORD = "select * from user where binary username = ? and binary password = md5(?)";
     private static final String CREATE = "insert into user (username, password, role) values (?, md5(?), ?)";
     private static final String UPDATE = "update user set username = ?, password = md5(?), role = ? where id = ?";
 

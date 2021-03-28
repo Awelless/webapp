@@ -7,12 +7,10 @@ import com.epam.web.util.CookieHandler;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 public class ChangeLocalizationCommand implements Command {
 
     private static final String LOCALIZATION_COOKIE_NAME = "localization";
-    private static final String PREVIOUS_PARAMS_COOKIE_NAME = "previousParams";
 
     private final CookieHandler cookieHandler = new CookieHandler();
 
@@ -31,8 +29,6 @@ public class ChangeLocalizationCommand implements Command {
     }
 
     private String getPreviousRequestParams(HttpServletRequest request) {
-
-        Optional<Cookie> previousParamsOptional = cookieHandler.getByName(request, PREVIOUS_PARAMS_COOKIE_NAME);
-        return previousParamsOptional.map(Cookie::getValue).orElse(null);
+        return (String) request.getSession().getAttribute("previousParams");
     }
 }

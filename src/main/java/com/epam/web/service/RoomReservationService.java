@@ -18,8 +18,8 @@ public class RoomReservationService {
         this.daoHelperFactory = daoHelperFactory;
     }
 
-    public void create(User user, Date checkIn, Date checkOut,
-                       int numberOfBeds, int rating) throws ServiceException {
+    public void create(User user, int numberOfBeds, int rating,
+                       Date checkIn, Date checkOut) throws ServiceException {
 
         RoomReservation reservation = new RoomReservation(
                 user.getId(), checkIn, checkOut, numberOfBeds, rating);

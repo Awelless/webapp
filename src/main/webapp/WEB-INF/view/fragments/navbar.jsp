@@ -9,18 +9,24 @@
     </div>
 
     <c:if test="${sessionScope.user != null && UserRole.USER.equals(sessionScope.user.role)}">
-        <a class="navbar-link" href="${pageContext.request.contextPath}/controller?command=newReservationPage">
-            <fmt:message key="local.navbar.reservations.new" />
-        </a>
-        <a class="navbar-link" href="${pageContext.request.contextPath}/controller?command=myReservationsPage">
-            <fmt:message key="local.navbar.reservations.my" />
-        </a>
+        <div class="navbar-link">
+            <a class="navbar-button-link" href="${pageContext.request.contextPath}/controller?command=newReservationPage">
+                <fmt:message key="local.navbar.reservations.new" />
+            </a>
+        </div>
+        <div class="navbar-link">
+            <a class="navbar-button-link" href="${pageContext.request.contextPath}/controller?command=userReservationsPage">
+                <fmt:message key="local.navbar.reservations.my" />
+            </a>
+        </div>
     </c:if>
 
     <c:if test="${sessionScope.user != null && UserRole.ADMIN.equals(sessionScope.user.role)}">
-        <a class="navbar-link" href="${pageContext.request.contextPath}/controller?command=allReservationsPage">
-            <fmt:message key="local.navbar.reservations.all" />
-        </a>
+        <div class="navbar-link">
+            <a class="navbar-button-link" href="${pageContext.request.contextPath}/controller?command=allReservationsPage">
+                <fmt:message key="local.navbar.reservations.all" />
+            </a>
+        </div>
     </c:if>
 
     <div class=navbar-container>

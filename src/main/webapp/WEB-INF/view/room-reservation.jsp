@@ -85,7 +85,7 @@
                     <br />
 
                     <label class="form-label" for="checkIn">
-                        <fmt:message key="local.room.check_in" />
+                        <fmt:message key="local.room.order.check_in" />
                     </label>
                     <input class="form-input"
                            id="checkIn"
@@ -97,7 +97,7 @@
                     <br />
 
                     <label class="form-label" for="checkOut">
-                        <fmt:message key="local.room.check_out" />
+                        <fmt:message key="local.room.order.check_out" />
                     </label>
                     <input class="form-input"
                            id="checkOut"

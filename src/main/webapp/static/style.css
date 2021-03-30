@@ -1,10 +1,17 @@
+.name {
+    font: 600 20px Arial;
+    color: #000000;
+    padding: 8px;
+    text-align: center;
+}
+
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     background-color: #EC801C;
-    z-index: 1;
+    z-index: 10;
     padding: 12px;
 }
 
@@ -17,11 +24,26 @@
 
 .navbar-link {
     display: inline-block;
+    font: 200 16px Arial;
     margin: 10px 0 -20px 0;
 }
 
 .navbar-button {
     display: inline-block;
+    margin: 0 20px -20px 0;
+}
+
+.navbar-button-link {
+    font: 200 18px Arial;
+    text-decoration: none;
+    color: #000000;
+    margin: 0 20px -20px 0;
+}
+
+.navbar-button-link:visited {
+    font: 200 18px Arial;
+    text-decoration: none;
+    color: #000000;
     margin: 0 20px -20px 0;
 }
 
@@ -31,6 +53,7 @@
     text-decoration: none;
     font-size: 35px;
     font-weight: bold;
+    margin-right: 30px;
 }
 
 .navbar-logo a:visited {
@@ -62,7 +85,7 @@ body {
 }
 
 .form-name {
-    font: 400 20px Arial;
+    font: 600 20px Arial;
     color: #000000;
     padding: 8px;
 }
@@ -84,7 +107,6 @@ body {
 .button-primary {
     color: #000000;
     background-color: #EC801C;
-    text-decoration: none;
     font: 400 14px Arial;
     padding: 6px 8px;
     margin: 8px;
@@ -96,7 +118,6 @@ body {
 .button-primary:hover {
     color: #000000;
     background-color: #ED7405;
-    text-decoration: none;
     padding: 6px 8px;
     margin: 8px;
     border: 1px solid #000000;
@@ -164,4 +185,47 @@ body {
 
 .link-button:focus {
     outline: none;
+}
+
+.table {
+    border: 1px solid #000000;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    margin: 0 1% 0 1%;
+    width: 98%;
+}
+
+th {
+    font: 600 16px Arial;
+    padding: 8px 0 8px 0;
+}
+
+tr {
+    border-bottom: 1pt solid #000000;
+    font: 200 16px Arial;
+    text-align: center;
+}
+
+.button-wrapper {
+    text-align: center;
+}
+
+.button-wrapper form {
+    display: inline-block;
+}
+
+.side {
+    height: 100%;
+    width: 25%;
+    position: fixed;
+    left: 0;
+    margin-left: 1%;
+}
+
+.side-td {
+    padding: 12px;
+}
+
+.main {
+    margin-left: 26%;
 }

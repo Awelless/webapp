@@ -6,54 +6,73 @@
 <jsp:include page="fragments/i18n.jsp" />
 
 <html>
-<jsp:include page="fragments/head.jsp" />
+    <jsp:include page="fragments/head.jsp" />
 
-<body>
-<jsp:include page="fragments/navbar.jsp" />
+    <body>
+        <jsp:include page="fragments/navbar.jsp" />
 
-<div class="container">
+        <div class="container">
 
-    <div>
-        <fmt:message key="local.room.order.all" />
-    </div>
+            <div class="name">
+                <fmt:message key="local.room.order.all" />
+            </div>
 
-    <table>
-        <tr>
-            <th><fmt:message key="local.room.beds" /></th>
-            <th><fmt:message key="local.room.rating" /></th>
-            <th><fmt:message key="local.room.check_in" /></th>
-            <th><fmt:message key="local.room.check_out" /></th>
-            <th><fmt:message key="local.room.order.status" /></th>
-            <th></th>
-            <th></th>
-        </tr>
+            <table class="table">
+                <tr>
+                    <th style="width: 10%"><fmt:message key="local.room.beds" /></th>
+                    <th><fmt:message key="local.room.rating" /></th>
+                    <th><fmt:message key="local.room.order.check_in" /></th>
+                    <th><fmt:message key="local.room.order.check_out" /></th>
+                    <th><fmt:message key="local.room.order.status" /></th>
+                    <th style="width: 15%"></th>
+                </tr>
 
-        <c:forEach var="reservation" items="${reservations}">
-            <tr>
-                <td>${reservation.numberOfBeds}</td>
-                <td>${reservation.rating}</td>
-                <td>${reservation.checkIn}</td>
-                <td>${reservation.checkOut}</td>
-                <td>${reservation.status}</td>
-                <td>
-                    <c:if test="${RoomReservationStatus.PENDING.equals(reservation.status)}">
-                        <a>
-                            approve
-                        </a>
-                    </c:if>
-                </td>
-                <td>
-                    <c:if test="${RoomReservationStatus.PENDING.equals(reservation.status)}">
-                        <a>
-                            reject
-                        </a>
-                    </c:if>
-                </td>
-            </tr>
-        </c:forEach>
+                <c:forEach var="reservation" items="${reservations}">
+                    <tr>
+                        <td>${reservation.numberOfBeds}</td>
+                        <td>${reservation.rating}</td>
+                        <td>${reservation.checkIn}</td>
+                        <td>${reservation.checkOut}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${RoomReservationStatus.PENDING.equals(reservation.status)}">
+                                    <fmt:message key="local.room.order.status.pending" />
+                                </c:when>
+                                <c:when test="${RoomReservationStatus.APPROVED.equals(reservation.status)}">
+                                    <fmt:message key="local.room.order.status.approved" />
+                                </c:when>
+                                <c:when test="${RoomReservationStatus.REJECTED.equals(reservation.status)}">
+                                    <fmt:message key="local.room.order.status.rejected" />
+                                </c:when>
+                                <c:when test="${RoomReservationStatus.PAID.equals(reservation.status)}">
+                                    <fmt:message key="local.room.order.status.paid" />
+                                </c:when>
+                                <c:when test="${RoomReservationStatus.DECLINED.equals(reservation.status)}">
+                                    <fmt:message key="local.room.order.status.canceled" />
+                                </c:when>
+                            </c:choose>
+                        </td>
+                        <td class="button-wrapper">
+                            <c:if test="${RoomReservationStatus.PENDING.equals(reservation.status)}">
+                                <form action="${pageContext.request.contextPath}/controller" method="get">
+                                    <input type="hidden" name="command" value="approvePage" />
+                                    <input type="hidden" name="reservationId" value="${reservation.id}" />
+                                    <input class="button-primary" type="submit" value="<fmt:message key="local.room.order.approve" />" />
+                                </form>
+                            </c:if>
+                            <c:if test="${RoomReservationStatus.PENDING.equals(reservation.status)}">
+                                <form action="${pageContext.request.contextPath}/controller" method="post">
+                                    <input type="hidden" name="command" value="reject" />
+                                    <input type="hidden" name="reservationId" value="${reservation.id}" />
+                                    <input class="button-primary" type="submit" value="<fmt:message key="local.room.order.reject" />" />
+                                </form>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
 
-    </table>
+            </table>
 
-</div>
-</body>
+        </div>
+    </body>
 </html>

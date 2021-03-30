@@ -2,6 +2,7 @@ package com.epam.web.command;
 
 import com.epam.web.dao.DaoHelperFactory;
 import com.epam.web.service.RoomReservationService;
+import com.epam.web.service.RoomService;
 import com.epam.web.service.UserService;
 
 public class CommandFactory {
@@ -25,6 +26,14 @@ public class CommandFactory {
                 return new ChangeLocalizationCommand();
             case "reservation":
                 return new ReserveRoomCommand(new RoomReservationService(daoHelperFactory));
+            case "approve":
+                return new ReservationApproveCommand(new RoomReservationService(daoHelperFactory), new RoomService(daoHelperFactory));
+            case "reject":
+                return new ReservationRejectCommand(new RoomReservationService(daoHelperFactory));
+            case "pay":
+                return new ReservationPayCommand(new RoomReservationService(daoHelperFactory));
+            case "decline":
+                return new ReservationDeclineCommand(new RoomReservationService(daoHelperFactory));
             case "loginPage":
                 return new ShowPageCommand(Pages.LOGIN);
             case "registrationPage":

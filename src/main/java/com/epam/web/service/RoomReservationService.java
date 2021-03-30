@@ -40,6 +40,10 @@ public class RoomReservationService {
 
     public void approve(RoomReservation reservation, Room room) throws ServiceException {
 
+        if (reservation == null || !RoomReservationStatus.PENDING.equals(reservation.getStatus())) {
+            throw new ServiceException("Can't approve given reservation: " + reservation);
+        }
+
         reservation.setStatus(RoomReservationStatus.APPROVED);
         reservation.setRoomId(room.getId());
 
@@ -54,11 +58,19 @@ public class RoomReservationService {
 
     public void reject(RoomReservation reservation) throws ServiceException {
 
+        if (reservation == null || !RoomReservationStatus.PENDING.equals(reservation.getStatus())) {
+            throw new ServiceException("Can't reject given reservation: " + reservation);
+        }
+
         reservation.setStatus(RoomReservationStatus.REJECTED);
         save(reservation);
     }
 
     public void pay(RoomReservation reservation) throws ServiceException {
+
+        if (reservation == null || !RoomReservationStatus.APPROVED.equals(reservation.getStatus())) {
+            throw new ServiceException("Can't pay given reservation: " + reservation);
+        }
 
         reservation.setStatus(RoomReservationStatus.PAID);
         Payment payment = new Payment(reservation.getId());
@@ -80,6 +92,10 @@ public class RoomReservationService {
     }
 
     public void decline(RoomReservation reservation) throws ServiceException {
+
+        if (reservation == null || RoomReservationStatus.PAID.equals(reservation.getStatus())) {
+            throw new ServiceException("Can't decline given reservation: " + reservation);
+        }
 
         reservation.setStatus(RoomReservationStatus.DECLINED);
         save(reservation);

@@ -7,6 +7,7 @@ import com.epam.web.entity.Room;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class RoomService {
 
@@ -29,4 +30,15 @@ public class RoomService {
         }
     }
 
+    public Optional<Room> getById(long id) throws ServiceException {
+
+        try(DaoHelper daoHelper = daoHelperFactory.create()) {
+            RoomDao roomDao = daoHelper.createRoomDao();
+
+            return roomDao.findById(id);
+
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
 }

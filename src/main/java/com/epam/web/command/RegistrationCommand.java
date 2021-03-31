@@ -2,6 +2,7 @@ package com.epam.web.command;
 
 import com.epam.web.entity.User;
 import com.epam.web.service.ServiceException;
+import com.epam.web.service.ServiceFactory;
 import com.epam.web.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,8 @@ public class RegistrationCommand implements Command {
 
     private final UserService userService;
 
-    public RegistrationCommand(UserService userService) {
-        this.userService = userService;
+    public RegistrationCommand(ServiceFactory serviceFactory) {
+        this.userService = serviceFactory.createUserService();
     }
 
     @Override

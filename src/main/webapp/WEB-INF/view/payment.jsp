@@ -54,7 +54,7 @@
                     <fmt:message key="local.room.order.cost" />
                 </div>
 
-                <c:if test="${reservation}">
+                <c:if test="${reservation != null}">
                     <div class="table">
                         <div class="name" style="font: 32px Arial; margin: 5%;">
                             ${reservation.cost}

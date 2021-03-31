@@ -3,6 +3,7 @@ package com.epam.web.command;
 import com.epam.web.entity.User;
 import com.epam.web.service.RoomReservationService;
 import com.epam.web.service.ServiceException;
+import com.epam.web.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,8 +26,8 @@ public class ReserveRoomCommand implements Command {
     private Date checkIn;
     private Date checkOut;
 
-    public ReserveRoomCommand(RoomReservationService roomReservationService) {
-        this.roomReservationService = roomReservationService;
+    public ReserveRoomCommand(ServiceFactory serviceFactory) {
+        this.roomReservationService = serviceFactory.createRoomReservationService();
     }
 
     @Override

@@ -6,12 +6,12 @@ public class RoomReservation implements Entity {
 
     private Long id;
     private Long userId;
-    private Long roomId;
+    private Long roomId = null;
     private Date checkIn;
     private Date checkOut;
     private int numberOfBeds;
     private int rating;
-    private long cost;
+    private Long cost = null;
     private RoomReservationStatus status = RoomReservationStatus.PENDING;
 
     public RoomReservation(Long userId, Date checkIn, Date checkOut, int numberOfBeds, int rating) {
@@ -22,7 +22,7 @@ public class RoomReservation implements Entity {
         this.rating = rating;
     }
 
-    public RoomReservation(Long id, Long userId, Long roomId, Date checkIn, Date checkOut, int numberOfBeds, int rating, long cost, RoomReservationStatus status) {
+    public RoomReservation(Long id, Long userId, Long roomId, Date checkIn, Date checkOut, int numberOfBeds, int rating, Long cost, RoomReservationStatus status) {
         this(userId, checkIn, checkOut, numberOfBeds, rating);
 
         this.id = id;
@@ -88,11 +88,11 @@ public class RoomReservation implements Entity {
         this.rating = rating;
     }
 
-    public long getCost() {
+    public Long getCost() {
         return cost;
     }
 
-    public void setCost(long cost) {
+    public void setCost(Long cost) {
         this.cost = cost;
     }
 

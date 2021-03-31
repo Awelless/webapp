@@ -6,6 +6,7 @@ public final class Params {
     public static final String NEW_RESERVATION_PAGE = "?command=newReservationPage";
     public static final String NEW_RESERVATION_SUCCESS_PAGE = "?command=newReservationSuccessPage";
     public static final String USER_RESERVATIONS_PAGE = "?command=userReservationsPage";
+    public static final String ALL_RESERVATIONS_PAGE = "?command=allReservationsPage";
 
     private Params() {
     }

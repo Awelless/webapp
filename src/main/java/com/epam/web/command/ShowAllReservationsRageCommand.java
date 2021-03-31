@@ -7,27 +7,23 @@ import com.epam.web.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
+import java.util.List;
 
-public class ReservationRejectCommand implements Command {
+public class ShowAllReservationsRageCommand implements Command {
 
     private final RoomReservationService roomReservationService;
 
-    public ReservationRejectCommand(ServiceFactory serviceFactory) {
+    public ShowAllReservationsRageCommand(ServiceFactory serviceFactory) {
         this.roomReservationService = serviceFactory.createRoomReservationService();
     }
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
 
-        long reservationId = Long.parseLong(request.getParameter("reservationId"));
+        List<RoomReservation> reservations = roomReservationService.getAll();
 
-        Optional<RoomReservation> reservation = roomReservationService.getById(reservationId);
+        request.setAttribute("reservations", reservations);
 
-        if (reservation.isPresent()) {
-            roomReservationService.reject(reservation.get());
-        }
-
-        return CommandResult.redirect(request.getRequestURI() + Params.ALL_RESERVATIONS_PAGE);
+        return CommandResult.forward(Pages.ALL_RESERVATIONS);
     }
 }

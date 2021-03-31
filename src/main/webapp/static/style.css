@@ -107,6 +107,7 @@ body {
 .button-primary {
     color: #000000;
     background-color: #EC801C;
+    text-decoration: none;
     font: 400 14px Arial;
     padding: 6px 8px;
     margin: 8px;
@@ -118,6 +119,7 @@ body {
 .button-primary:hover {
     color: #000000;
     background-color: #ED7405;
+    text-decoration: none;
     padding: 6px 8px;
     margin: 8px;
     border: 1px solid #000000;
@@ -201,6 +203,7 @@ th {
 }
 
 tr {
+    height: 50px;
     border-bottom: 1pt solid #000000;
     font: 200 16px Arial;
     text-align: center;

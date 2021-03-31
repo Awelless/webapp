@@ -14,12 +14,14 @@ public class RoomReservationMapper implements Mapper<RoomReservation> {
 
         long id = resultSet.getLong("id");
         long userId = resultSet.getLong("user_id");
-        long roomId = resultSet.getLong("room_id");
+        long roomIdValue = resultSet.getLong("room_id");
+        Long roomId = resultSet.wasNull() ? null : roomIdValue;
         Date checkIn = resultSet.getDate("check_in");
         Date checkOut = resultSet.getDate("check_out");
         int numberOfBeds = resultSet.getInt("number_of_beds");
         int rating = resultSet.getInt("rating");
-        int cost = resultSet.getInt("cost");
+        long costValue = resultSet.getLong("cost");
+        Long cost = resultSet.wasNull() ? null : costValue;
         String statusValue = resultSet.getString("status");
         RoomReservationStatus status = RoomReservationStatus.valueOf(statusValue);
 

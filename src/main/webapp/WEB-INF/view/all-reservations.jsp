@@ -47,7 +47,7 @@
                                 <c:when test="${RoomReservationStatus.PAID.equals(reservation.status)}">
                                     <fmt:message key="local.room.order.status.paid" />
                                 </c:when>
-                                <c:when test="${RoomReservationStatus.DECLINED.equals(reservation.status)}">
+                                <c:when test="${RoomReservationStatus.CANCELED.equals(reservation.status)}">
                                     <fmt:message key="local.room.order.status.canceled" />
                                 </c:when>
                             </c:choose>
@@ -55,7 +55,7 @@
                         <td class="button-wrapper">
                             <c:if test="${RoomReservationStatus.PENDING.equals(reservation.status)}">
                                 <form action="${pageContext.request.contextPath}/controller" method="get">
-                                    <input type="hidden" name="command" value="approvePage" />
+                                    <input type="hidden" name="command" value="choosingRoomPage" />
                                     <input type="hidden" name="reservationId" value="${reservation.id}" />
                                     <input class="button-primary" type="submit" value="<fmt:message key="local.room.order.approve" />" />
                                 </form>
@@ -64,7 +64,7 @@
                                 <form action="${pageContext.request.contextPath}/controller" method="post">
                                     <input type="hidden" name="command" value="reject" />
                                     <input type="hidden" name="reservationId" value="${reservation.id}" />
-                                    <input class="button-primary" type="submit" value="<fmt:message key="local.room.order.reject" />" />
+                                    <input class="button-light" type="submit" value="<fmt:message key="local.room.order.reject" />" />
                                 </form>
                             </c:if>
                         </td>

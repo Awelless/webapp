@@ -3,17 +3,18 @@ package com.epam.web.command;
 import com.epam.web.entity.RoomReservation;
 import com.epam.web.service.RoomReservationService;
 import com.epam.web.service.ServiceException;
+import com.epam.web.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-public class ReservationDeclineCommand implements Command {
+public class ReservationCancelCommand implements Command {
 
     private final RoomReservationService roomReservationService;
 
-    public ReservationDeclineCommand(RoomReservationService roomReservationService) {
-        this.roomReservationService = roomReservationService;
+    public ReservationCancelCommand(ServiceFactory serviceFactory) {
+        this.roomReservationService = serviceFactory.createRoomReservationService();
     }
 
     @Override
@@ -24,9 +25,9 @@ public class ReservationDeclineCommand implements Command {
         Optional<RoomReservation> reservation = roomReservationService.getById(reservationId);
 
         if (reservation.isPresent()) {
-            roomReservationService.decline(reservation.get());
+            roomReservationService.cancel(reservation.get());
         }
 
-        return CommandResult.redirect(Pages.USER_RESERVATIONS);
+        return CommandResult.redirect(request.getRequestURI() + Params.USER_RESERVATIONS_PAGE);
     }
 }

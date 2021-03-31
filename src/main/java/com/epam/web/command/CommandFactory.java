@@ -1,13 +1,10 @@
 package com.epam.web.command;
 
-import com.epam.web.dao.DaoHelperFactory;
-import com.epam.web.service.RoomReservationService;
-import com.epam.web.service.RoomService;
-import com.epam.web.service.UserService;
+import com.epam.web.service.ServiceFactory;
 
 public class CommandFactory {
 
-    private final DaoHelperFactory daoHelperFactory = new DaoHelperFactory();
+    private final ServiceFactory serviceFactory = new ServiceFactory();
 
     public Command create(String type) {
 
@@ -17,23 +14,23 @@ public class CommandFactory {
 
         switch (type) {
             case "login":
-                return new LoginCommand(new UserService(daoHelperFactory));
+                return new LoginCommand(serviceFactory);
             case "logout":
                 return new LogoutCommand();
             case "registration":
-                return new RegistrationCommand(new UserService(daoHelperFactory));
+                return new RegistrationCommand(serviceFactory);
             case "localization":
                 return new ChangeLocalizationCommand();
             case "reservation":
-                return new ReserveRoomCommand(new RoomReservationService(daoHelperFactory));
+                return new ReserveRoomCommand(serviceFactory);
             case "approve":
-                return new ReservationApproveCommand(new RoomReservationService(daoHelperFactory), new RoomService(daoHelperFactory));
+                return new ReservationApproveCommand(serviceFactory);
             case "reject":
-                return new ReservationRejectCommand(new RoomReservationService(daoHelperFactory));
+                return new ReservationRejectCommand(serviceFactory);
             case "pay":
-                return new ReservationPayCommand(new RoomReservationService(daoHelperFactory));
-            case "decline":
-                return new ReservationDeclineCommand(new RoomReservationService(daoHelperFactory));
+                return new ReservationPayCommand(serviceFactory);
+            case "cancel":
+                return new ReservationCancelCommand(serviceFactory);
             case "loginPage":
                 return new ShowPageCommand(Pages.LOGIN);
             case "registrationPage":
@@ -43,13 +40,13 @@ public class CommandFactory {
             case "newReservationSuccessPage":
                 return new ShowPageCommand(Pages.ROOM_RESERVATION_SUCCESS);
             case "userReservationsPage":
-                return new ShowPageCommand(Pages.USER_RESERVATIONS);
+                return new ShowUserReservationsPageCommand(serviceFactory);
             case "paymentPage":
-                return new ShowPageCommand(Pages.PAYMENT);
+                return new ShowPaymentPageCommand(serviceFactory);
             case "allReservationsPage":
-                return new ShowPageCommand(Pages.ALL_RESERVATIONS);
+                return new ShowAllReservationsRageCommand(serviceFactory);
             case "choosingRoomPage":
-                return new ShowPageCommand(Pages.CHOOSING_ROOM);
+                return new ShowChoosingRoomPageCommand(serviceFactory);
             default:
                 throw new IllegalArgumentException("Unknown type of Command " + type);
         }

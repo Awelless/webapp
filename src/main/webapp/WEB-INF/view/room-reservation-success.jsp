@@ -17,7 +17,7 @@
                     <fmt:message key="local.room.order.success" />
                     <br />
                     <br />
-                    <a class="button-primary" href="${pageContext.request.contextPath}/controller?command=userRoomReservationsPage">
+                    <a class="button-primary" href="${pageContext.request.contextPath}/controller?command=userReservationsPage">
                         OK
                     </a>
                 </div>

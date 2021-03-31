@@ -47,7 +47,7 @@
                                 <c:when test="${RoomReservationStatus.PAID.equals(reservation.status)}">
                                     <fmt:message key="local.room.order.status.paid" />
                                 </c:when>
-                                <c:when test="${RoomReservationStatus.DECLINED.equals(reservation.status)}">
+                                <c:when test="${RoomReservationStatus.CANCELED.equals(reservation.status)}">
                                     <fmt:message key="local.room.order.status.canceled" />
                                 </c:when>
                             </c:choose>
@@ -60,9 +60,11 @@
                                     <input class="button-primary" type="submit" value="<fmt:message key="local.room.order.pay" />" />
                                 </form>
                             </c:if>
-                            <c:if test="${!RoomReservationStatus.PAID.equals(reservation.status)}">
+                            <c:if test="${RoomReservationStatus.PENDING.equals(reservation.status) ||
+                                          RoomReservationStatus.APPROVED.equals(reservation.status)}">
                                 <form action="${pageContext.request.contextPath}/controller" method="post">
-                                    <input type="hidden" name="command" value="decline" />
+                                    <input type="hidden" name="command" value="cancel" />
+                                    <input type="hidden" name="reservationId" value="${reservation.id}" />
                                     <input class="button-light" type="submit" value="<fmt:message key="local.room.order.cancel" />" />
                                 </form>
                             </c:if>

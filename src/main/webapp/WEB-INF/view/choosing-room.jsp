@@ -51,9 +51,9 @@
 
                 <table class="table">
                     <tr>
-                        <th style="width: 20%"><fmt:message key="local.room.beds" /></th>
+                        <th style="width: 20%"><fmt:message key="local.room.number" /></th>
+                        <th><fmt:message key="local.room.beds" /></th>
                         <th><fmt:message key="local.room.rating" /></th>
-                        <th><fmt:message key="local.room.order.status" /></th>
                         <th style="width: 10%"></th>
                     </tr>
 

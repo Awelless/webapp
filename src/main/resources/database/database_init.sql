@@ -25,7 +25,7 @@ create table room_reservation (
     number_of_beds int not null,
     cost bigint,
     rating int not null,
-    status enum('PENDING', 'REJECTED', 'APPROVED', 'PAID', 'DECLINED') not null,
+    status enum('PENDING', 'REJECTED', 'APPROVED', 'PAID', 'CANCELED') not null,
 
     primary key (id),
     foreign key (user_id) references user (id),

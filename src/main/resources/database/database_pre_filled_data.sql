@@ -14,4 +14,5 @@ insert into room (id, number_of_beds, cost, rating) values
 (9, 2, 36, 5);
 
 insert into room_reservation (id, user_id, room_id, check_in, check_out, number_of_beds, cost, rating, status) values
-(1, 2, 2, '20210303', '20210310', 2, 126, 3, 'APPROVED');
+(1, 2, 2, '20210303', '20210310', 2, 126, 3, 'APPROVED'),
+(2, 2, null, '20210401', '20210407', 1, null, 4, 'PENDING');

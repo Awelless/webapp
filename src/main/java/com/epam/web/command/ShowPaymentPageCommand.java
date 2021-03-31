@@ -9,25 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-public class ReservationRejectCommand implements Command {
+public class ShowPaymentPageCommand implements Command {
 
     private final RoomReservationService roomReservationService;
 
-    public ReservationRejectCommand(ServiceFactory serviceFactory) {
+    public ShowPaymentPageCommand(ServiceFactory serviceFactory) {
         this.roomReservationService = serviceFactory.createRoomReservationService();
     }
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
 
-        long reservationId = Long.parseLong(request.getParameter("reservationId"));
+        long id = Long.parseLong(request.getParameter("reservationId"));
+        Optional<RoomReservation> reservationOptional = roomReservationService.getById(id);
 
-        Optional<RoomReservation> reservation = roomReservationService.getById(reservationId);
+        reservationOptional.ifPresent(reservation -> request.setAttribute("reservation", reservation));
 
-        if (reservation.isPresent()) {
-            roomReservationService.reject(reservation.get());
-        }
-
-        return CommandResult.redirect(request.getRequestURI() + Params.ALL_RESERVATIONS_PAGE);
+        return CommandResult.forward(Pages.PAYMENT);
     }
 }

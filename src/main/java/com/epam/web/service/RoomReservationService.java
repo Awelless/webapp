@@ -7,6 +7,7 @@ import com.epam.web.dao.RoomReservationDao;
 import com.epam.web.entity.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -91,13 +92,13 @@ public class RoomReservationService {
         }
     }
 
-    public void decline(RoomReservation reservation) throws ServiceException {
+    public void cancel(RoomReservation reservation) throws ServiceException {
 
         if (reservation == null || RoomReservationStatus.PAID.equals(reservation.getStatus())) {
             throw new ServiceException("Can't decline given reservation: " + reservation);
         }
 
-        reservation.setStatus(RoomReservationStatus.DECLINED);
+        reservation.setStatus(RoomReservationStatus.CANCELED);
         save(reservation);
     }
 
@@ -107,6 +108,30 @@ public class RoomReservationService {
             RoomReservationDao roomReservationDao = daoHelper.createRoomReservationDao();
 
             roomReservationDao.save(reservation);
+
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<RoomReservation> getByUser(User user) throws ServiceException {
+
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            RoomReservationDao roomReservationDao = daoHelper.createRoomReservationDao();
+
+            return roomReservationDao.findByUserId(user.getId());
+
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<RoomReservation> getAll() throws ServiceException {
+
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            RoomReservationDao roomReservationDao = daoHelper.createRoomReservationDao();
+
+            return roomReservationDao.findAll();
 
         } catch (Exception e) {
             throw new ServiceException(e);

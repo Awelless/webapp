@@ -18,12 +18,12 @@ public class RoomService {
     }
 
     public List<Room> getAvailableByDateAndBedsAndRating(Date checkIn, Date checkOut,
-            int numberOfBeds, int rating) throws ServiceException {
+                                                         int numberOfBeds, int rating) throws ServiceException {
 
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             RoomDao roomDao = daoHelper.createRoomDao();
-            return roomDao.findAvailableByDateAndBedsAndRating(
-                    checkIn, checkOut, numberOfBeds, rating);
+
+            return roomDao.findAvailableByDateAndBedsAndRating(checkIn, checkOut, numberOfBeds, rating);
 
         } catch (Exception e) {
             throw new ServiceException(e);

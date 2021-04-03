@@ -36,10 +36,16 @@
             <input class="link-button" type="submit" value="EN" />
         </form>
 
-        <form class="navbar-link" style="margin-right: 40px" action="${pageContext.request.contextPath}/controller" method="post">
+        <form class="navbar-link" action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="localization" />
             <input type="hidden" name="value" value="RU" />
             <input class="link-button" type="submit" value="RU" />
+        </form>
+
+        <form class="navbar-link" style="margin-right: 40px" action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="localization" />
+            <input type="hidden" name="value" value="BY" />
+            <input class="link-button" type="submit" value="BY" />
         </form>
 
         <c:if test="${sessionScope.user != null}">

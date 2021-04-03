@@ -1,7 +1,7 @@
 package com.epam.web.localization;
 
 public enum Localization {
-    EN, RU;
+    EN, RU, BY;
 
     public static boolean isValid(String value) {
         Localization[] localizations = values();

@@ -40,6 +40,7 @@ public class ConnectionPool {
     }
 
     /*package-private*/ ConnectionPool(int poolSize, List<ProxyConnection> connections) {
+
         connectionsSemaphore = new Semaphore(poolSize);
 
         List<ProxyConnection> updatedConnections = connections.stream()

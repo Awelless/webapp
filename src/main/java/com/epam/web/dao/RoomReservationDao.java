@@ -11,7 +11,7 @@ public class RoomReservationDao extends AbstractDao<RoomReservation> {
 
     private static final String TABLE_NAME = "room_reservation";
 
-    private static final String FIND_BY_USER_ID = "select * from room_reservation where user_id = ?";
+    private static final String FIND_BY_USER_ID = "select * from room_reservation where user_id = ? order by id desc";
     private static final String CREATE = "insert into room_reservation " +
             "(user_id, room_id, check_in, check_out, number_of_beds, rating, cost, status) " +
             "values (?, ?, ?, ?, ?, ?, ?, ?)";

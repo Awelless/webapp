@@ -28,6 +28,6 @@ public class ReservationCancelCommand implements Command {
             roomReservationService.cancel(reservation.get());
         }
 
-        return CommandResult.redirect(request.getRequestURI() + Params.USER_RESERVATIONS_PAGE);
+        return CommandResult.redirect(request.getRequestURI() + "?command=" + Commands.USER_RESERVATIONS_PAGE);
     }
 }

@@ -19,6 +19,7 @@
 
             <table class="table">
                 <tr>
+                    <th style="width: 10%"><fmt:message key="local.room.number" /></th>
                     <th style="width: 10%"><fmt:message key="local.room.beds" /></th>
                     <th><fmt:message key="local.room.rating" /></th>
                     <th><fmt:message key="local.room.order.check_in" /></th>
@@ -29,6 +30,7 @@
 
                 <c:forEach var="reservation" items="${reservations}">
                     <tr>
+                        <td>${reservation.roomId != null ? reservation.roomId : "-"}</td>
                         <td>${reservation.numberOfBeds}</td>
                         <td>${reservation.rating}</td>
                         <td>${reservation.checkIn}</td>

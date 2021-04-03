@@ -14,7 +14,7 @@ import java.util.Optional;
 public abstract class AbstractDao<T extends Entity> implements Dao<T> {
 
     private static final String FIND_BY_ID = "select * from %s where id = ?";
-    private static final String FIND_ALL = "select * from %s";
+    private static final String FIND_ALL = "select * from %s order by id desc";
     private static final String DELETE = "delete from %s where id = ?";
 
     private final ProxyConnection connection;

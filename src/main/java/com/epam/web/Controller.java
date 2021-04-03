@@ -4,6 +4,9 @@ import com.epam.web.command.Command;
 import com.epam.web.command.CommandFactory;
 import com.epam.web.command.CommandResult;
 import com.epam.web.service.ServiceException;
+import com.epam.web.util.CookieHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,13 +16,17 @@ import java.io.IOException;
 
 public class Controller extends HttpServlet {
 
+    private static final String PREVIOUS_PARAMS_COOKIE_NAME = "previousParams";
+
+    private static final Logger LOGGER = LogManager.getLogger(Controller.class);
+
     private final CommandFactory commandFactory = new CommandFactory();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //TODO: filter command
         
-        saveParams(request);
+        saveParams(request, response);
         process(request, response);
     }
 
@@ -34,7 +41,7 @@ public class Controller extends HttpServlet {
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String commandType = request.getParameter("command");
+        String commandType = (String) request.getAttribute("command");
         Command command = commandFactory.create(commandType);
 
         try {
@@ -49,12 +56,14 @@ public class Controller extends HttpServlet {
             }
 
         } catch (ServiceException e) {
-            // TODO: error page?
+            LOGGER.warn(e.getMessage(), e);
         }
     }
 
-    private void saveParams(HttpServletRequest request) {
+    private void saveParams(HttpServletRequest request, HttpServletResponse response) {
+
         String query = request.getQueryString();
-        request.getSession().setAttribute("previousParams", query);
+        CookieHandler cookieHandler = new CookieHandler();
+        cookieHandler.setUnexpiring(response, PREVIOUS_PARAMS_COOKIE_NAME, query);
     }
 }

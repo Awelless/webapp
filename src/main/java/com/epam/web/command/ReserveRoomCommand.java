@@ -52,7 +52,7 @@ public class ReserveRoomCommand implements Command {
 
         roomReservationService.create(user, numberOfBeds, rating, checkIn, checkOut);
 
-        return CommandResult.redirect(request.getRequestURI() + Params.NEW_RESERVATION_SUCCESS_PAGE);
+        return CommandResult.redirect(request.getRequestURI() + "?command=" + Commands.NEW_RESERVATION_SUCCESS_PAGE);
     }
 
     private boolean validate(HttpServletRequest request) {

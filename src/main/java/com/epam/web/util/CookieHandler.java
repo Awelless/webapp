@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public class CookieHandler {
 
+    private static final int INFINITE_MAX_AGE = 60 * 60 * 24 * 365 * 20;
+
     public Optional<Cookie> getByName(HttpServletRequest request, String name) {
 
         Cookie[] cookies = request.getCookies();
@@ -24,7 +26,10 @@ public class CookieHandler {
         return Optional.empty();
     }
 
-    public void set(HttpServletResponse response, Cookie cookie) {
+    public void setUnexpiring(HttpServletResponse response, String name, String value) {
+
+        Cookie cookie = new Cookie(name, value);
+        cookie.setMaxAge(INFINITE_MAX_AGE);
         response.addCookie(cookie);
     }
 }

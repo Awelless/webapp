@@ -13,39 +13,39 @@ public class CommandFactory {
         }
 
         switch (type) {
-            case "login":
+            case Commands.LOGIN:
                 return new LoginCommand(serviceFactory);
-            case "logout":
+            case Commands.LOGOUT:
                 return new LogoutCommand();
-            case "registration":
+            case Commands.REGISTRATION:
                 return new RegistrationCommand(serviceFactory);
-            case "localization":
+            case Commands.CHANGE_LOCALIZATION:
                 return new ChangeLocalizationCommand();
-            case "reservation":
+            case Commands.RESERVE_ROOM:
                 return new ReserveRoomCommand(serviceFactory);
-            case "approve":
+            case Commands.RESERVATION_APPROVE:
                 return new ReservationApproveCommand(serviceFactory);
-            case "reject":
+            case Commands.RESERVATION_REJECT:
                 return new ReservationRejectCommand(serviceFactory);
-            case "pay":
+            case Commands.RESERVATION_PAY:
                 return new ReservationPayCommand(serviceFactory);
-            case "cancel":
+            case Commands.RESERVATION_CANCEL:
                 return new ReservationCancelCommand(serviceFactory);
-            case "loginPage":
+            case Commands.LOGIN_PAGE:
                 return new ShowPageCommand(Pages.LOGIN);
-            case "registrationPage":
+            case Commands.REGISTRATION_PAGE:
                 return new ShowPageCommand(Pages.REGISTRATION);
-            case "newReservationPage":
+            case Commands.NEW_RESERVATION_PAGE:
                 return new ShowPageCommand(Pages.ROOM_RESERVATION);
-            case "newReservationSuccessPage":
+            case Commands.NEW_RESERVATION_SUCCESS_PAGE:
                 return new ShowPageCommand(Pages.ROOM_RESERVATION_SUCCESS);
-            case "userReservationsPage":
+            case Commands.USER_RESERVATIONS_PAGE:
                 return new ShowUserReservationsPageCommand(serviceFactory);
-            case "paymentPage":
+            case Commands.PAYMENT_PAGE:
                 return new ShowPaymentPageCommand(serviceFactory);
-            case "allReservationsPage":
+            case Commands.ALL_RESERVATIONS_PAGE:
                 return new ShowAllReservationsRageCommand(serviceFactory);
-            case "choosingRoomPage":
+            case Commands.CHOOSING_ROOM_PAGE:
                 return new ShowChoosingRoomPageCommand(serviceFactory);
             default:
                 throw new IllegalArgumentException("Unknown type of Command " + type);

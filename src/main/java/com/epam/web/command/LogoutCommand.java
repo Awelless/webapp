@@ -8,6 +8,6 @@ public class LogoutCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         request.getSession().invalidate();
-        return CommandResult.redirect(request.getRequestURI() + Params.LOGIN_PAGE);
+        return CommandResult.redirect(request.getRequestURI() + "?command=" + Commands.LOGIN_PAGE);
     }
 }

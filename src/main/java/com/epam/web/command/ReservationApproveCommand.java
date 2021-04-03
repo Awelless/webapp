@@ -34,6 +34,6 @@ public class ReservationApproveCommand implements Command {
             roomReservationService.approve(reservation.get(), room.get());
         }
 
-        return CommandResult.redirect(request.getRequestURI() + Params.ALL_RESERVATIONS_PAGE);
+        return CommandResult.redirect(request.getRequestURI() + "?command=" + Commands.ALL_RESERVATIONS_PAGE);
     }
 }

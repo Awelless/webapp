@@ -1,5 +1,8 @@
 package com.epam.web.connection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.*;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicReference;
@@ -9,8 +12,9 @@ import java.util.stream.Collectors;
 
 public class ConnectionPool {
 
-    private static final AtomicReference<ConnectionPool> INSTANCE = new AtomicReference<>();
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
+    private static final AtomicReference<ConnectionPool> INSTANCE = new AtomicReference<>();
     private static final Lock INSTANCE_LOCK = new ReentrantLock();
 
     private final Queue<ProxyConnection> availableConnections = new ArrayDeque<>();
@@ -62,6 +66,7 @@ public class ConnectionPool {
             return connection;
 
         } catch (InterruptedException e) {
+            LOGGER.warn(e.getMessage(), e);
             throw new ConnectionPoolException(e);
 
         } finally {

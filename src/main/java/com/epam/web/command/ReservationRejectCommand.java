@@ -28,6 +28,6 @@ public class ReservationRejectCommand implements Command {
             roomReservationService.reject(reservation.get());
         }
 
-        return CommandResult.redirect(request.getRequestURI() + Params.ALL_RESERVATIONS_PAGE);
+        return CommandResult.redirect(request.getRequestURI() + "?command=" + Commands.ALL_RESERVATIONS_PAGE);
     }
 }

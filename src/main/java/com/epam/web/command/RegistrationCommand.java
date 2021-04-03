@@ -35,7 +35,7 @@ public class RegistrationCommand implements Command {
 
         userService.create(username, password);
 
-        return CommandResult.redirect(request.getRequestURI() + Params.LOGIN_PAGE);
+        return CommandResult.redirect(request.getRequestURI() + "?command=" + Commands.LOGIN_PAGE);
     }
 
     private boolean validate(HttpServletRequest request) throws ServiceException {

@@ -5,6 +5,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 public class ConnectionPool {
 
@@ -38,12 +39,14 @@ public class ConnectionPool {
         return INSTANCE.get();
     }
 
-    /*package-private*/ ConnectionPool(int poolSize) {
+    /*package-private*/ ConnectionPool(int poolSize, List<ProxyConnection> connections) {
         connectionsSemaphore = new Semaphore(poolSize);
-    }
 
-    /*package-private*/ void initializeConnections(List<ProxyConnection> connections) {
-        availableConnections.addAll(connections);
+        List<ProxyConnection> updatedConnections = connections.stream()
+                .peek(connection -> connection.setConnectionPool(this))
+                .collect(Collectors.toList());
+
+        availableConnections.addAll(updatedConnections);
     }
 
     public ProxyConnection getConnection() {

@@ -17,12 +17,18 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //TODO: filter command
+        
         saveParams(request);
         process(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //TODO: filter command
+
+        //TODO: write security filter
+
         process(request, response);
     }
 
@@ -43,7 +49,7 @@ public class Controller extends HttpServlet {
             }
 
         } catch (ServiceException e) {
-            // ...
+            // TODO: error page?
         }
     }
 

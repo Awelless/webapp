@@ -8,10 +8,13 @@ import java.util.concurrent.Executor;
 public class ProxyConnection implements Connection {
 
     private final Connection connection;
-    private final ConnectionPool connectionPool;
+    private ConnectionPool connectionPool;
 
-    public ProxyConnection(Connection connection, ConnectionPool connectionPool) {
+    public ProxyConnection(Connection connection) {
         this.connection = connection;
+    }
+
+    /*package-private*/ void setConnectionPool(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 

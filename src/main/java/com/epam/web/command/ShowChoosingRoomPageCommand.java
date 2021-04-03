@@ -38,6 +38,7 @@ public class ShowChoosingRoomPageCommand implements Command {
                     reservation.getCheckOut(),
                     reservation.getNumberOfBeds(),
                     reservation.getRating());
+
             request.setAttribute("rooms", rooms);
         }
 

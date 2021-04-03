@@ -25,10 +25,9 @@ public class ConnectionPoolFactory {
     /*package-private*/ ConnectionPool create() {
         try {
             initializeProperties();
-            ConnectionPool connectionPool = new ConnectionPool(poolSize);
-            initializeConnections(connectionPool);
+            List<ProxyConnection> connections = initializeConnections();
 
-            return connectionPool;
+            return new ConnectionPool(poolSize, connections);
 
         } catch (IOException | SQLException | ClassNotFoundException e) {
             throw new ConnectionPoolException("Connection pool hasn't started properly", e);
@@ -49,7 +48,7 @@ public class ConnectionPoolFactory {
         poolSize = Integer.parseInt(properties.getProperty("database.connection.pool_size"));
     }
 
-    private void initializeConnections(ConnectionPool pool) throws SQLException {
+    private List<ProxyConnection> initializeConnections() throws SQLException {
 
         List<ProxyConnection> connections = new ArrayList<>();
 
@@ -57,11 +56,11 @@ public class ConnectionPoolFactory {
             Connection connection = DriverManager.getConnection(
                     dbUrl, dbUsername, dbPassword);
 
-            ProxyConnection proxyConnection = new ProxyConnection(connection, pool);
+            ProxyConnection proxyConnection = new ProxyConnection(connection);
 
             connections.add(proxyConnection);
         }
 
-        pool.initializeConnections(connections);
+        return connections;
     }
 }

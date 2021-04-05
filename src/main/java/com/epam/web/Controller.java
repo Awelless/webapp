@@ -17,6 +17,7 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
 
     private static final String PREVIOUS_PARAMS_COOKIE_NAME = "previousParams";
+    private static final String PAGE_REQUEST_REGEX = ".*Page";
 
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
@@ -24,18 +25,14 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //TODO: filter command
-        
+        testMethod(request);
         saveParams(request, response);
         process(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //TODO: filter command
-
-        //TODO: write security filter
-
+        testMethod(request);
         process(request, response);
     }
 
@@ -65,5 +62,22 @@ public class Controller extends HttpServlet {
         String query = request.getQueryString();
         CookieHandler cookieHandler = new CookieHandler();
         cookieHandler.setUnexpiring(response, PREVIOUS_PARAMS_COOKIE_NAME, query);
+    }
+
+    private void testMethod(HttpServletRequest request) throws ServletException {
+
+        String command = (String) request.getAttribute("command");
+
+        if ("GET".equals(request.getMethod())) {
+            if (!command.matches(PAGE_REQUEST_REGEX)) {
+                throw new ServletException("Invalid method for command: " + command);
+            }
+        }
+
+        if ("POST".equals(request.getMethod())) {
+            if (command.matches(PAGE_REQUEST_REGEX)) {
+                throw new ServletException("Invalid method for command: " + command);
+            }
+        }
     }
 }

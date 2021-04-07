@@ -9,9 +9,6 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Logger name="com.epam.web.Controller" level="WARN" additivity="false">
-            <AppenderRef ref="Console" />
-        </Logger>
         <Logger name="com.epam.web.connection.ConnectionPool" level="WARN" additivity="false">
             <AppenderRef ref="ConnectionPoolFile" />
         </Logger>

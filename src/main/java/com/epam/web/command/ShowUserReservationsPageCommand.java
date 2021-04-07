@@ -4,7 +4,6 @@ import com.epam.web.entity.RoomReservation;
 import com.epam.web.entity.User;
 import com.epam.web.service.RoomReservationService;
 import com.epam.web.service.ServiceException;
-import com.epam.web.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +13,8 @@ public class ShowUserReservationsPageCommand implements Command {
 
     private final RoomReservationService roomReservationService;
 
-    public ShowUserReservationsPageCommand(ServiceFactory serviceFactory) {
-        this.roomReservationService = serviceFactory.createRoomReservationService();
+    public ShowUserReservationsPageCommand(RoomReservationService roomReservationService) {
+        this.roomReservationService = roomReservationService;
     }
 
     @Override

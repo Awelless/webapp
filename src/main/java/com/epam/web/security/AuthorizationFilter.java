@@ -8,8 +8,54 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.*;
 
 public class AuthorizationFilter implements Filter {
+
+    private Map<String, Set<UserRole>> permissions;
+
+    @Override
+    public void init(FilterConfig filterConfig) {
+
+        Map<String, Set<UserRole>> permissions = new HashMap<>();
+
+        permissions.put(Commands.LOGIN,
+                new HashSet<>(Collections.singletonList(UserRole.ANONYMOUS)));
+        permissions.put(Commands.REGISTRATION,
+                new HashSet<>(Collections.singletonList(UserRole.ANONYMOUS)));
+        permissions.put(Commands.CHANGE_LOCALIZATION,
+                new HashSet<>(Arrays.asList(UserRole.ANONYMOUS, UserRole.USER, UserRole.ADMIN)));
+        permissions.put(Commands.LOGIN_PAGE,
+                new HashSet<>(Collections.singletonList(UserRole.ANONYMOUS)));
+        permissions.put(Commands.REGISTRATION_PAGE,
+                new HashSet<>(Collections.singletonList(UserRole.ANONYMOUS)));
+        permissions.put(Commands.LOGOUT,
+                new HashSet<>(Arrays.asList(UserRole.USER, UserRole.ADMIN)));
+        permissions.put(Commands.RESERVE_ROOM,
+                new HashSet<>(Collections.singletonList(UserRole.USER)));
+        permissions.put(Commands.RESERVATION_PAY,
+                new HashSet<>(Collections.singletonList(UserRole.USER)));
+        permissions.put(Commands.RESERVATION_CANCEL,
+                new HashSet<>(Collections.singletonList(UserRole.USER)));
+        permissions.put(Commands.NEW_RESERVATION_PAGE,
+                new HashSet<>(Collections.singletonList(UserRole.USER)));
+        permissions.put(Commands.NEW_RESERVATION_SUCCESS_PAGE,
+                new HashSet<>(Collections.singletonList(UserRole.USER)));
+        permissions.put(Commands.USER_RESERVATIONS_PAGE,
+                new HashSet<>(Collections.singletonList(UserRole.USER)));
+        permissions.put(Commands.PAYMENT_PAGE,
+                new HashSet<>(Collections.singletonList(UserRole.USER)));
+        permissions.put(Commands.RESERVATION_APPROVE,
+                new HashSet<>(Collections.singletonList(UserRole.ADMIN)));
+        permissions.put(Commands.RESERVATION_REJECT,
+                new HashSet<>(Collections.singletonList(UserRole.ADMIN)));
+        permissions.put(Commands.ALL_RESERVATIONS_PAGE,
+                new HashSet<>(Collections.singletonList(UserRole.ADMIN)));
+        permissions.put(Commands.CHOOSING_ROOM_PAGE,
+                new HashSet<>(Collections.singletonList(UserRole.ADMIN)));
+
+        this.permissions = Collections.unmodifiableMap(permissions);
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
@@ -19,52 +65,24 @@ public class AuthorizationFilter implements Filter {
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
+            String command = (String) httpServletRequest.getAttribute("command");
+
             User user = (User) httpServletRequest.getSession().getAttribute("user");
+            UserRole role = user != null ? user.getRole() : UserRole.ANONYMOUS;
 
-            if (user != null) {
+            boolean authorized = permissions.containsKey(command) && permissions.get(command).contains(role);
 
-                boolean authorized;
-
-                if (UserRole.ADMIN.equals(user.getRole())) {
-                    authorized = hasAdminCommand(httpServletRequest);
-                } else {
-                    authorized = hasUserCommand(httpServletRequest);
-                }
-
-                if (!authorized) {
-                    httpServletResponse.sendRedirect(httpServletRequest.getRequestURI());
-                    return;
-                }
+            if (!authorized) {
+                httpServletResponse.sendRedirect(httpServletRequest.getRequestURI());
+                return;
             }
         }
 
         filterChain.doFilter(request, response);
     }
 
-    boolean hasUserCommand(HttpServletRequest request) {
-
-        String command = (String) request.getAttribute("command");
-
-        return Commands.LOGOUT.equals(command) ||
-                Commands.CHANGE_LOCALIZATION.equals(command) ||
-                Commands.RESERVE_ROOM.equals(command) ||
-                Commands.RESERVATION_PAY.equals(command) ||
-                Commands.RESERVATION_CANCEL.equals(command) ||
-                Commands.NEW_RESERVATION_PAGE.equals(command) ||
-                Commands.NEW_RESERVATION_SUCCESS_PAGE.equals(command) ||
-                Commands.USER_RESERVATIONS_PAGE.equals(command) ||
-                Commands.PAYMENT_PAGE.equals(command);
-    }
-
-    boolean hasAdminCommand(HttpServletRequest request) {
-
-        String command = (String) request.getAttribute("command");
-
-        return Commands.LOGOUT.equals(command) ||
-                Commands.CHANGE_LOCALIZATION.equals(command) ||
-                Commands.RESERVATION_APPROVE.equals(command) ||
-                Commands.RESERVATION_REJECT.equals(command) ||
-                Commands.ALL_RESERVATIONS_PAGE.equals(command) ||
-                Commands.CHOOSING_ROOM_PAGE.equals(command);
+    @Override
+    public void destroy() {
+        permissions = null;
     }
 }

@@ -5,7 +5,6 @@ import com.epam.web.entity.RoomReservation;
 import com.epam.web.service.RoomReservationService;
 import com.epam.web.service.RoomService;
 import com.epam.web.service.ServiceException;
-import com.epam.web.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +15,9 @@ public class ReservationApproveCommand implements Command {
     private final RoomReservationService roomReservationService;
     private final RoomService roomService;
 
-    public ReservationApproveCommand(ServiceFactory serviceFactory) {
-        this.roomReservationService = serviceFactory.createRoomReservationService();
-        this.roomService = serviceFactory.createRoomService();
+    public ReservationApproveCommand(RoomReservationService roomReservationService, RoomService roomService) {
+        this.roomReservationService = roomReservationService;
+        this.roomService = roomService;
     }
 
     @Override

@@ -40,6 +40,13 @@
                                 <fmt:message key="local.room.order.check_out" />: ${reservation.checkOut}
                             </td>
                         </tr>
+                        <tr>
+                            <td class="side-td">
+                                <a class="button-light" href="${pageContext.request.contextPath}/controller?command=allReservationsPage">
+                                    <fmt:message key="local.button.back" />
+                                </a>
+                            </td>
+                        </tr>
                     </table>
                 </c:if>
             </div>

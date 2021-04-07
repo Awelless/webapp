@@ -1,10 +1,12 @@
 package com.epam.web.service;
 
+import com.epam.web.dao.DaoException;
 import com.epam.web.dao.DaoHelper;
 import com.epam.web.dao.DaoHelperFactory;
 import com.epam.web.dao.RoomDao;
 import com.epam.web.entity.Room;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +27,7 @@ public class RoomService {
 
             return roomDao.findAvailableByDateAndBedsAndRating(checkIn, checkOut, numberOfBeds, rating);
 
-        } catch (Exception e) {
+        } catch (SQLException | DaoException e) {
             throw new ServiceException(e);
         }
     }
@@ -37,7 +39,7 @@ public class RoomService {
 
             return roomDao.findById(id);
 
-        } catch (Exception e) {
+        } catch (SQLException | DaoException e) {
             throw new ServiceException(e);
         }
     }

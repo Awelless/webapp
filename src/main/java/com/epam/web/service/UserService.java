@@ -1,10 +1,12 @@
 package com.epam.web.service;
 
+import com.epam.web.dao.DaoException;
 import com.epam.web.dao.DaoHelper;
 import com.epam.web.dao.DaoHelperFactory;
 import com.epam.web.dao.UserDao;
 import com.epam.web.entity.User;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class UserService {
@@ -22,7 +24,7 @@ public class UserService {
 
             return userDao.findByUsernameAndPassword(username, password);
 
-        } catch (Exception e) {
+        } catch (SQLException | DaoException e) {
             throw new ServiceException(e);
         }
     }
@@ -36,7 +38,7 @@ public class UserService {
 
             userDao.save(user);
 
-        } catch (Exception e) {
+        } catch (SQLException | DaoException e) {
             throw new ServiceException(e);
         }
     }
@@ -48,7 +50,7 @@ public class UserService {
 
             return userDao.findByUsername(username);
 
-        } catch (Exception e) {
+        } catch (SQLException | DaoException e) {
             throw new ServiceException(e);
         }
     }

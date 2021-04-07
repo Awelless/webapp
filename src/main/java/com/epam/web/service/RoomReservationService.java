@@ -1,11 +1,9 @@
 package com.epam.web.service;
 
-import com.epam.web.dao.DaoHelper;
-import com.epam.web.dao.DaoHelperFactory;
-import com.epam.web.dao.PaymentDao;
-import com.epam.web.dao.RoomReservationDao;
+import com.epam.web.dao.*;
 import com.epam.web.entity.*;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +32,7 @@ public class RoomReservationService {
 
             return roomReservationDao.findById(id);
 
-        } catch (Exception e) {
+        } catch (SQLException | DaoException e) {
             throw new ServiceException(e);
         }
     }
@@ -87,7 +85,7 @@ public class RoomReservationService {
 
             daoHelper.commit();
 
-        } catch (Exception e) {
+        } catch (SQLException | DaoException e) {
             throw new ServiceException(e);
         }
     }
@@ -109,7 +107,7 @@ public class RoomReservationService {
 
             roomReservationDao.save(reservation);
 
-        } catch (Exception e) {
+        } catch (SQLException | DaoException e) {
             throw new ServiceException(e);
         }
     }
@@ -121,7 +119,7 @@ public class RoomReservationService {
 
             return roomReservationDao.findByUserId(user.getId());
 
-        } catch (Exception e) {
+        } catch (SQLException | DaoException e) {
             throw new ServiceException(e);
         }
     }
@@ -133,7 +131,7 @@ public class RoomReservationService {
 
             return roomReservationDao.findAll();
 
-        } catch (Exception e) {
+        } catch (SQLException | DaoException e) {
             throw new ServiceException(e);
         }
     }

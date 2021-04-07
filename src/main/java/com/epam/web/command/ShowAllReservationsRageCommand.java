@@ -3,7 +3,6 @@ package com.epam.web.command;
 import com.epam.web.entity.RoomReservation;
 import com.epam.web.service.RoomReservationService;
 import com.epam.web.service.ServiceException;
-import com.epam.web.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,8 +12,8 @@ public class ShowAllReservationsRageCommand implements Command {
 
     private final RoomReservationService roomReservationService;
 
-    public ShowAllReservationsRageCommand(ServiceFactory serviceFactory) {
-        this.roomReservationService = serviceFactory.createRoomReservationService();
+    public ShowAllReservationsRageCommand(RoomReservationService roomReservationService) {
+        this.roomReservationService = roomReservationService;
     }
 
     @Override

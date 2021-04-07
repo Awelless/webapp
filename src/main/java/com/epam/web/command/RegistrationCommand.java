@@ -1,71 +1,49 @@
 package com.epam.web.command;
 
-import com.epam.web.entity.User;
+import com.epam.web.entity.UserCredentialsDto;
 import com.epam.web.service.ServiceException;
-import com.epam.web.service.ServiceFactory;
 import com.epam.web.service.UserService;
+import com.epam.web.validation.UserCredentialsValidator;
+import com.epam.web.validation.ValidationException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
+import java.util.Set;
 
 public class RegistrationCommand implements Command {
 
-    private String username;
-    private String password;
-    private String passwordConfirmation;
-
+    private final UserCredentialsValidator userCredentialsValidator;
     private final UserService userService;
 
-    public RegistrationCommand(ServiceFactory serviceFactory) {
-        this.userService = serviceFactory.createUserService();
+    public RegistrationCommand(UserService userService) {
+        this.userService = userService;
+        this.userCredentialsValidator = new UserCredentialsValidator(userService);
     }
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
 
-        username = request.getParameter("username");
-        password = request.getParameter("password");
-        passwordConfirmation = request.getParameter("passwordConfirmation");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String passwordConfirmation = request.getParameter("passwordConfirmation");
 
-        if (!validate(request)) {
+        UserCredentialsDto userCredentialsDto = new UserCredentialsDto(username, password, passwordConfirmation);
+
+        try {
+            userCredentialsValidator.validate(userCredentialsDto);
+
+        } catch (ValidationException e) {
+
             request.setAttribute("username", username);
+
+            Set<String> errors = e.getErrors();
+            errors.forEach(error -> request.setAttribute(error, true));
+
             return CommandResult.forward(Pages.REGISTRATION);
         }
 
         userService.create(username, password);
 
         return CommandResult.redirect(request.getRequestURI() + "?command=" + Commands.LOGIN_PAGE);
-    }
-
-    private boolean validate(HttpServletRequest request) throws ServiceException {
-
-        boolean valid = true;
-
-        if (username == null || username.trim().isEmpty()) {
-            request.setAttribute("usernameError", true);
-            valid = false;
-        }
-
-        if (password == null || password.trim().isEmpty()) {
-            request.setAttribute("passwordError", true);
-            valid = false;
-        }
-
-        if (passwordConfirmation == null || !passwordConfirmation.equals(password)) {
-            request.setAttribute("passwordConfirmationError", true);
-            valid = false;
-        }
-
-        if (username != null) {
-            Optional<User> optionalUser = userService.getByUsername(username);
-
-            if (optionalUser.isPresent()) {
-                request.setAttribute("uniquenessError", true);
-                valid = false;
-            }
-        }
-
-        return valid;
     }
 }

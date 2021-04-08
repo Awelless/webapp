@@ -5,10 +5,21 @@ import com.epam.web.entity.User;
 import com.epam.web.entity.UserRole;
 
 import javax.servlet.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Optional;
 
 public class CommandParamHandlerFilter implements Filter {
+
+    private static final String PREVIOUS_PARAMS_COOKIE_NAME = "previousParams";
+
+    private CookieHandler cookieHandler;
+
+    @Override
+    public void init(FilterConfig filterConfig) {
+        cookieHandler = new CookieHandler();
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
@@ -17,8 +28,17 @@ public class CommandParamHandlerFilter implements Filter {
 
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
-            String requestCommand;
             String command = httpServletRequest.getParameter("command");
+
+            if (Commands.PREVIOUS_REQUEST.equals(command)) {
+
+                Optional<Cookie> optionalCookie = cookieHandler.getByName(
+                        httpServletRequest, PREVIOUS_PARAMS_COOKIE_NAME);
+
+                command = optionalCookie.map(Cookie::getValue).orElse(null);
+            }
+
+            String requestCommand;
 
             if (command == null || command.trim().isEmpty()) {
 

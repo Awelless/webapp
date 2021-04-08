@@ -19,6 +19,7 @@ public final class Commands {
     public static final String PAYMENT_PAGE = "paymentPage";
     public static final String ALL_RESERVATIONS_PAGE = "allReservationsPage";
     public static final String CHOOSING_ROOM_PAGE = "choosingRoomPage";
+    public static final String PREVIOUS_REQUEST = "previousRequest";
 
     private Commands() {
     }

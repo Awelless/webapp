@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.epam.web.entity.RoomReservationStatus" %>
 
 <jsp:include page="fragments/i18n.jsp" />
 
@@ -42,7 +41,7 @@
                         </tr>
                         <tr>
                             <td class="side-td">
-                                <a class="button-light" href="${pageContext.request.contextPath}/controller?command=allReservationsPage">
+                                <a class="button-light" href="${pageContext.request.contextPath}/controller?command=previousRequest">
                                     <fmt:message key="local.button.back" />
                                 </a>
                             </td>

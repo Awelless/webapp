@@ -47,4 +47,23 @@
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
 
+  <filter>
+    <filter-name>paramsSaver</filter-name>
+    <filter-class>com.epam.web.util.SaveParamsFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>paramsSaver</filter-name>
+    <servlet-name>main</servlet-name>
+  </filter-mapping>
+
+  <!-- ERROR HANDLING -->
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/view/errors/404-error.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/view/errors/500-error.jsp</location>
+  </error-page>
+
 </web-app>

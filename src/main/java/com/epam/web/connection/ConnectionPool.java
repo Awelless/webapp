@@ -66,7 +66,7 @@ public class ConnectionPool {
             return connection;
 
         } catch (InterruptedException e) {
-            LOGGER.warn(e.getMessage(), e);
+            LOGGER.fatal(e.getMessage(), e);
             throw new ConnectionPoolException(e);
 
         } finally {

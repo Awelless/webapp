@@ -4,7 +4,6 @@ import com.epam.web.command.Command;
 import com.epam.web.command.CommandFactory;
 import com.epam.web.command.CommandResult;
 import com.epam.web.service.ServiceException;
-import com.epam.web.util.CookieHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Controller extends HttpServlet {
-
-    private static final String PREVIOUS_PARAMS_COOKIE_NAME = "previousParams";
-    private static final String PAGE_REQUEST_REGEX = ".*Page";
 
     private final CommandFactory commandFactory = new CommandFactory();
 
@@ -52,8 +48,6 @@ public class Controller extends HttpServlet {
     }
 
     private void saveParams(HttpServletRequest request, HttpServletResponse response) {
-        String query = request.getQueryString();
-        CookieHandler cookieHandler = new CookieHandler();
-        cookieHandler.setUnexpiring(response, PREVIOUS_PARAMS_COOKIE_NAME, query);
+
     }
 }

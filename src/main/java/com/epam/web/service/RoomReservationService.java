@@ -2,10 +2,11 @@ package com.epam.web.service;
 
 import com.epam.web.dao.*;
 import com.epam.web.entity.*;
+import com.epam.web.pagination.Page;
+import com.epam.web.pagination.PageRequest;
 
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -112,24 +113,24 @@ public class RoomReservationService {
         }
     }
 
-    public List<RoomReservation> getByUser(User user) throws ServiceException {
+    public Page<RoomReservation> getByUser(User user, PageRequest pageRequest) throws ServiceException {
 
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             RoomReservationDao roomReservationDao = daoHelper.createRoomReservationDao();
 
-            return roomReservationDao.findByUserId(user.getId());
+            return roomReservationDao.findByUserId(user.getId(), pageRequest);
 
         } catch (SQLException | DaoException e) {
             throw new ServiceException(e);
         }
     }
 
-    public List<RoomReservation> getAll() throws ServiceException {
+    public Page<RoomReservation> getAll(PageRequest pageRequest) throws ServiceException {
 
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             RoomReservationDao roomReservationDao = daoHelper.createRoomReservationDao();
 
-            return roomReservationDao.findAll();
+            return roomReservationDao.findAll(pageRequest);
 
         } catch (SQLException | DaoException e) {
             throw new ServiceException(e);

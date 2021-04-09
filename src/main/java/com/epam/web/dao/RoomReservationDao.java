@@ -3,15 +3,17 @@ package com.epam.web.dao;
 import com.epam.web.connection.ProxyConnection;
 import com.epam.web.entity.RoomReservation;
 import com.epam.web.mapper.RoomReservationMapper;
+import com.epam.web.pagination.Page;
+import com.epam.web.pagination.PageRequest;
 
-import java.util.List;
 import java.util.Optional;
 
 public class RoomReservationDao extends AbstractDao<RoomReservation> {
 
     private static final String TABLE_NAME = "room_reservation";
 
-    private static final String FIND_BY_USER_ID = "select * from room_reservation where user_id = ? order by id desc";
+    private static final String FIND_PAGE_BY_USER_ID = "select ceiling(count(*) over () / ?), rr.* " +
+            "from room_reservation rr where user_id = ? order by id desc limit ? offset ?";
     private static final String CREATE = "insert into room_reservation " +
             "(user_id, room_id, check_in, check_out, number_of_beds, rating, cost, status) " +
             "values (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -23,8 +25,8 @@ public class RoomReservationDao extends AbstractDao<RoomReservation> {
         super(connection, new RoomReservationMapper(), TABLE_NAME);
     }
 
-    public List<RoomReservation> findByUserId(long userId) throws DaoException {
-        return executeQuery(FIND_BY_USER_ID, userId);
+    public Page<RoomReservation> findByUserId(long userId, PageRequest pageRequest) throws DaoException {
+        return executePageQuery(FIND_PAGE_BY_USER_ID, pageRequest, userId);
     }
 
     @Override

@@ -1,10 +1,12 @@
 package com.epam.web.command;
 
+import com.epam.web.pagination.PageRequestExtractor;
 import com.epam.web.service.ServiceFactory;
 
 public class CommandFactory {
 
     private final ServiceFactory serviceFactory = new ServiceFactory();
+    private final PageRequestExtractor pageRequestExtractor = new PageRequestExtractor();
 
     public Command create(String type) {
 
@@ -41,11 +43,11 @@ public class CommandFactory {
             case Commands.NEW_RESERVATION_SUCCESS_PAGE:
                 return new ShowPageCommand(Pages.ROOM_RESERVATION_SUCCESS);
             case Commands.USER_RESERVATIONS_PAGE:
-                return new ShowUserReservationsPageCommand(serviceFactory.createRoomReservationService());
+                return new ShowUserReservationsPageCommand(serviceFactory.createRoomReservationService(), pageRequestExtractor);
             case Commands.PAYMENT_PAGE:
                 return new ShowPaymentPageCommand(serviceFactory.createRoomReservationService());
             case Commands.ALL_RESERVATIONS_PAGE:
-                return new ShowAllReservationsRageCommand(serviceFactory.createRoomReservationService());
+                return new ShowAllReservationsRageCommand(serviceFactory.createRoomReservationService(), pageRequestExtractor);
             case Commands.CHOOSING_ROOM_PAGE:
                 return new ShowChoosingRoomPageCommand(serviceFactory.createRoomReservationService(),
                                                        serviceFactory.createRoomService());

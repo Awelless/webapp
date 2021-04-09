@@ -13,6 +13,7 @@ import java.util.Optional;
 public class CommandParamHandlerFilter implements Filter {
 
     private static final String PREVIOUS_PARAMS_COOKIE_NAME = "previousParams";
+    private static final String COMMAND_PARAM_REGEX = "command=.*";
 
     private CookieHandler cookieHandler;
 
@@ -35,7 +36,21 @@ public class CommandParamHandlerFilter implements Filter {
                 Optional<Cookie> optionalCookie = cookieHandler.getByName(
                         httpServletRequest, PREVIOUS_PARAMS_COOKIE_NAME);
 
-                command = optionalCookie.map(Cookie::getValue).orElse(null);
+                if (optionalCookie.isPresent()) {
+                    String[] previousParams = optionalCookie.get().getValue().split("&");
+
+                    for (String param : previousParams) {
+
+                        if (param.matches(COMMAND_PARAM_REGEX)) {
+                            int begin = param.lastIndexOf("command=");
+                            command = param.substring(begin);
+                            break;
+                        }
+                    }
+
+                } else {
+                    command = null;
+                }
             }
 
             String requestCommand;

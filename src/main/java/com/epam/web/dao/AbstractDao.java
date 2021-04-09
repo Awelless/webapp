@@ -3,11 +3,14 @@ package com.epam.web.dao;
 import com.epam.web.connection.ProxyConnection;
 import com.epam.web.entity.Entity;
 import com.epam.web.mapper.Mapper;
+import com.epam.web.pagination.Page;
+import com.epam.web.pagination.PageRequest;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +18,8 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
 
     private static final String FIND_BY_ID = "select * from %s where id = ?";
     private static final String FIND_ALL = "select * from %s order by id desc";
+    private static final String FIND_ALL_PAGE = "select ceiling(count(*) over () / ?), __1_entity.* " +
+            "from %s __1_entity order by id desc limit ? offset ?";
     private static final String DELETE = "delete from %s where id = ?";
 
     private final ProxyConnection connection;
@@ -28,6 +33,8 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     }
 
     private PreparedStatement createStatement(String query, Object ...params) throws SQLException {
+
+        query = String.format(query, tableName);
 
         PreparedStatement statement = connection.prepareStatement(query);
         for (int i = 0; i < params.length; ++i) {
@@ -70,6 +77,51 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
         return Optional.empty();
     }
 
+    private Object[] concatParams(Object ...params) {
+
+        List<Object> objects = new ArrayList<>();
+
+        for (Object param : params) {
+
+            if (param.getClass().isArray()) {
+                objects.addAll(Arrays.asList((Object[]) param));
+
+            } else {
+                objects.add(param);
+            }
+        }
+
+        return objects.toArray();
+    }
+
+    protected Page<T> executePageQuery(String query, PageRequest pageRequest, Object ...params) throws DaoException {
+
+        int pageNumber = pageRequest.getPageNumber();
+        int pageSize = pageRequest.getPageSize();
+
+        int offset = (pageNumber - 1) * pageSize;
+
+        Object[] newParams = concatParams(pageSize, params, pageSize, offset);
+
+        try (PreparedStatement statement = createStatement(query, newParams);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            int totalPages = 0;
+
+            List<T> entities = new ArrayList<>();
+            while (resultSet.next()) {
+                totalPages = resultSet.getInt(1);
+                T entity = mapper.map(resultSet);
+                entities.add(entity);
+            }
+
+            return new Page<>(entities, totalPages, pageNumber);
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
     protected void executeUpdate(String query, Object ...params) throws DaoException {
 
         try (PreparedStatement statement = createStatement(query, params)) {
@@ -90,6 +142,12 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     public List<T> findAll() throws DaoException {
         String query = String.format(FIND_ALL, tableName);
         return executeQuery(query);
+    }
+
+    @Override
+    public Page<T> findAll(PageRequest pageRequest) throws DaoException {
+        String query = String.format(FIND_ALL_PAGE, tableName);
+        return executePageQuery(query, pageRequest);
     }
 
     @Override

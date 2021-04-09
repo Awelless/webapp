@@ -28,7 +28,7 @@
                     <th style="width: 15%"></th>
                 </tr>
 
-                <c:forEach var="reservation" items="${reservations}">
+                <c:forEach var="reservation" items="${reservationsPage.content}">
                     <tr>
                         <td>${reservation.roomId != null ? reservation.roomId : "-"}</td>
                         <td>${reservation.numberOfBeds}</td>
@@ -72,8 +72,11 @@
                         </td>
                     </tr>
                 </c:forEach>
-
             </table>
+
+            <jsp:include page="fragments/pagination.jsp">
+                <jsp:param name="command" value="allReservationsPage"/>
+            </jsp:include>
 
         </div>
     </body>

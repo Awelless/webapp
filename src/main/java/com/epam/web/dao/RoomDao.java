@@ -12,7 +12,8 @@ public class RoomDao extends AbstractDao<Room> {
 
     private static final String TABLE_NAME = "room";
 
-    private static final String FIND_AVAILABLE_BY_DATE_BEDS_RATING = "select r.* from room r " +
+    private static final String FIND_AVAILABLE_BY_DATE_AND_BEDS_AND_RATING =
+            "select r.* from room r " +
             "left join room_reservation rr on " +
                 "r.id = rr.room_id " +                           //params:
                 "and (? between rr.check_in and rr.check_out " + //dateFrom
@@ -23,9 +24,11 @@ public class RoomDao extends AbstractDao<Room> {
             "where " +                                           //
                 "rr.room_id is null " +                          //
                     "and r.number_of_beds = ? " +                //numberOfBeds
-                    "and r.rating = ?";                          //rating
-    private static final String CREATE = "insert into room (id, number_of_beds, cost, rating) values (?, ?, ?, ?)";
-    private static final String UPDATE = "update room set number_of_beds = ?, cost = ?, rating = ? where id = ?";
+                    "and r.rating = ? ";                         //rating
+    private static final String CREATE = "insert into room " +
+            "(id, number_of_beds, cost, rating) values (?, ?, ?, ?)";
+    private static final String UPDATE = "update room " +
+            "set number_of_beds = ?, cost = ?, rating = ? where id = ?";
 
     public RoomDao(ProxyConnection connection) {
         super(connection, new RoomMapper(), TABLE_NAME);
@@ -35,7 +38,7 @@ public class RoomDao extends AbstractDao<Room> {
                                                           int numberOfBeds, int rating) throws DaoException {
 
         //dateFrom and dateTo are used 2 times in query
-        return executeQuery(FIND_AVAILABLE_BY_DATE_BEDS_RATING,
+        return executeQuery(FIND_AVAILABLE_BY_DATE_AND_BEDS_AND_RATING,
                 dateFrom, dateTo, dateFrom, dateTo, numberOfBeds, rating);
     }
 

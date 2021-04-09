@@ -176,13 +176,12 @@ body {
 }
 
 .link-button {
+    font: 200 16px Arial;
     background: none;
     border: none;
     color: #000000;
     text-decoration: underline;
     cursor: pointer;
-    font-size: 1em;
-    font-family: serif;
 }
 
 .link-button:focus {
@@ -231,4 +230,62 @@ tr {
 
 .main {
     margin-left: 26%;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    font: 200 16px Arial;
+    color: black;
+    background-color: #FFFFFF;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #CCCCCC;
+}
+
+.pagination a:hover {
+    background-color: #F4F1EC;
+    color: #000000;
+    border: 1px solid #CCCCCC;
+}
+
+.pagination span {
+    font: 200 16px Arial;
+    color: #000000;
+    background-color: #FFFFFF;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #CCCCCC;
+}
+
+.pagination span.current {
+    color: #000000;
+    background-color: #EC801C;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination span:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.pagination span:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.pagination a:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.pagination a:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }

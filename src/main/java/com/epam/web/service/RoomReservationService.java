@@ -93,7 +93,8 @@ public class RoomReservationService {
 
     public void cancel(RoomReservation reservation) throws ServiceException {
 
-        if (reservation == null || RoomReservationStatus.PAID.equals(reservation.getStatus())) {
+        if (reservation == null || RoomReservationStatus.PAID.equals(reservation.getStatus())
+                || RoomReservationStatus.CANCELED.equals(reservation.getStatus())) {
             throw new ServiceException("Can't decline given reservation: " + reservation);
         }
 

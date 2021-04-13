@@ -17,7 +17,6 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        saveParams(request, response);
         process(request, response);
     }
 
@@ -45,9 +44,5 @@ public class Controller extends HttpServlet {
         } catch (ServiceException e) {
             throw new ServletException(e);
         }
-    }
-
-    private void saveParams(HttpServletRequest request, HttpServletResponse response) {
-
     }
 }

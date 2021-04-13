@@ -1,7 +1,6 @@
 package com.epam.web.validation;
 
 import com.epam.web.entity.RoomReservationDto;
-import com.epam.web.service.ServiceException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -18,7 +17,7 @@ public class RoomReservationValidator implements Validator<RoomReservationDto> {
     }
 
     @Override
-    public void validate(RoomReservationDto reservation) throws ValidationException, ServiceException {
+    public void validate(RoomReservationDto reservation) throws ValidationException {
 
         String numberOfBedsValue = reservation.getNumberOfBedsValue();
         String ratingValue = reservation.getRatingValue();
